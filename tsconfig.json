@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@data/*": ["src/data/*"],
+    },
     "module": "commonjs",
     "allowJs": true,
     "skipLibCheck": true,
