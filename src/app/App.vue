@@ -1,8 +1,35 @@
 <template>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-</template>
-
-<script setup>
-    console.log('👋 This message is being logged by "App.vue", included via Vite');
-</script>
+    <div>
+      <h1>Welcome to Safe Stash!</h1>
+      <p>Testing Naive UI integration:</p>
+      <n-space justify="center">
+        <n-button type="primary">Click Me!</n-button>
+        <n-button type="info">
+          <template #icon>
+            <n-icon>
+              <information-circle-outline />
+            </n-icon>
+          </template>
+          Info
+        </n-button>
+      </n-space>
+      <n-divider />
+      <p>Icon Example:</p>
+      <n-icon size="40" color="#4CAF50">
+        <cash-outline />
+      </n-icon>
+    </div>
+  </template>
+  
+  <script setup lang="ts">
+  import { NButton, NDivider, NIcon, NSpace } from 'naive-ui';
+  // Import the specific icons you need from the library
+  import { CashOutline, InformationCircleOutline } from '@vicons/ionicons5';
+  </script>
+  
+  <style scoped>
+  div {
+    padding: 20px;
+    text-align: center;
+  }
+  </style>

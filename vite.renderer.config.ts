@@ -5,7 +5,6 @@ export default defineConfig({
     resolve: {
         alias: {
             '@app': '/src/app',
-            '@data': '/src/data',
         }   
     },
     plugins: [vue()]
