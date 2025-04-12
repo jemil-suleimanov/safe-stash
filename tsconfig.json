@@ -1,19 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@data/*": ["src/data/*"],
-    },
-    "module": "commonjs",
-    "allowJs": true,
-    "skipLibCheck": true,
+    // Common settings shared across Node/Electron and App configs
+    "strict": true,
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "sourceMap": true, 
     "baseUrl": ".",
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "resolveJsonModule": true
-  }
+    "paths": { 
+        "@app/*": ["src/app/*"],
+        "@electron/*": ["src/electron/*"],
+        "@data/*": ["src/data/*"],
+        "@shared/*": ["src/shared/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["src/electron"],
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.app.json" }
+  ]
 }
