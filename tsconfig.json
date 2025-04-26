@@ -11,7 +11,6 @@
     "paths": { 
         "@app/*": ["src/app/*"],
         "@electron/*": ["src/electron/*"],
-        "@data/*": ["src/data/*"],
         "@shared/*": ["src/shared/*"]
     }
   },

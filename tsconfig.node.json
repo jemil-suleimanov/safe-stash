@@ -10,6 +10,7 @@
     "include": [
       "src/electron/**/*.ts",
       "src/electron/**/*.cts",
+      "src/shared/**/*.ts",
     ],
     "exclude": [
       "node_modules",

@@ -14,6 +14,7 @@ const config: ForgeConfig = {
         ignore: [
             /node_modules\/(?!(better-sqlite3|bindings|file-uri-to-path)\/)/,
         ],
+        extraResource: ['src/electron/database/schema.sql']
     },
     rebuildConfig: {},
     makers:        [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
@@ -25,12 +26,12 @@ const config: ForgeConfig = {
             build: [
                 {
                     // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
-                    entry:  'src/electron/main.ts',
+                    entry:  'src/electron/core/main.ts',
                     config: 'vite.main.config.ts',
                     target: 'main',
                 },
                 {
-                    entry:  'src/electron/preload.ts',
+                    entry:  'src/electron/preload/preload.ts',
                     config: 'vite.preload.config.ts',
                     target: 'preload',
                 },

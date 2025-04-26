@@ -1,7 +1,8 @@
 // vite.main.config.ts
-import { builtinModules } from 'node:module'; // Import builtinModules
+import { builtinModules } from 'node:module' // Import builtinModules
+import path from 'node:path'
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
 
 export default defineConfig({
     // Ensure root is correct if needed, often defaults fine
@@ -13,13 +14,20 @@ export default defineConfig({
             external: [
                 'electron',
                 ...builtinModules.flatMap(p => [p, `node:${p}`]), // Mark all node builtins as external
-                'better-sqlite3' // <<<--- Explicitly mark better-sqlite3 as external
-            ]
+                'better-sqlite3', // <<<--- Explicitly mark better-sqlite3 as external
+            ],
         },
     // Optional: Configure CommonJS plugin if needed, though externalizing might be enough
     // commonjsOptions: {
     //   ignoreDynamicRequires: true, // Or configure dynamicRequireTargets
     // }
+    },
+    resolve: {
+        alias: {
+            '@app':      path.resolve('./src/app'),
+            '@electron': path.resolve('./src/electron'),
+            '@shared':   path.resolve('./src/shared'),
+        },
     },
     // --- Important for Native Modules ---
     optimizeDeps: {
@@ -35,4 +43,4 @@ export default defineConfig({
     //      ],
     //   }),
     // ],
-});
+})
