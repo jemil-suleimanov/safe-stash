@@ -26,7 +26,8 @@ const stylisticLegacyDisableConfig = stylistic.configs['disable-legacy'];
 
 
 const customConfig = {
-    files:   ['**/*.{js,mjs,cjs,ts,vue}'],
+    files:   ['**/*.{js,mjs,cjs,ts}'],
+    ignores: ['**/*.vue'],
     plugins: {
         '@typescript-eslint': tseslint.plugin,
         'simple-import-sort': simpleImportSort,
@@ -35,9 +36,8 @@ const customConfig = {
     languageOptions: {
         parser:        tseslint.parser,
         parserOptions: {
-            extraFileExtensions: ['.vue'],
-            sourceType:          'module',
-            ecmaVersion:         'latest',
+            sourceType:  'module',
+            ecmaVersion: 'latest',
         },
     },
     rules: {
@@ -57,33 +57,62 @@ const customConfig = {
                 'align':     'value',
             },
         ],
-        '@stylistic/object-curly-spacing':   ['error', 'always'],
-        '@stylistic/eol-last':               ['error', 'always'],
-        '@stylistic/semi':                   ['error', 'always'],
-        '@stylistic/quotes':                 ['error', 'single'],
-        '@stylistic/comma-dangle':           ['error', 'always-multiline'],
-        '@stylistic/arrow-spacing':          'error',
-        '@stylistic/no-trailing-spaces':     'error',
-        'vue/html-indent':                   ['error', 4],
-        'vue/max-attributes-per-line':       ['warn', { singleline: 3, multiline: 1 }],
-        'vue/multi-word-component-names':    'off',
-        'vue/component-options-name-casing': ['error', 'PascalCase'],
-        'vue/custom-event-name-casing':      ['error', 'camelCase'],
-        'vue/define-emits-declaration':      ['error', 'type-based'],
-        'vue/define-props-declaration':      ['error', 'type-based'],
+        '@stylistic/object-curly-spacing': ['error', 'always'],
+        '@stylistic/eol-last':             ['error', 'always'],
+        '@stylistic/semi':                 ['error', 'always'],
+        '@stylistic/quotes':               ['error', 'single'],
+        '@stylistic/comma-dangle':         ['error', 'always-multiline'],
+        '@stylistic/arrow-spacing':        'error',
+        '@stylistic/no-trailing-spaces':   'error',
     },
 };
 
-const appConfig = createTypedConfig(
-    ['src/app/**/*.{ts,vue}'],
-    './tsconfig.app.json',
-    {
-        languageOptions: { globals: { ...globals.browser } },
-        rules:           {
-            '@typescript-eslint/no-floating-promises': 'error',
+const vueConfig = {
+    files:           ['src/app/**/*.vue'],
+    languageOptions: {
+        parserOptions: {
+            parser:              tseslint.parser,
+            project:             ['./tsconfig.app.json'],
+            tsconfigRootDir:     import.meta.dirname,
+            extraFileExtensions: ['.vue'],
+            sourceType:          'module',
+            ecmaVersion:         'latest',
         },
+        globals: { ...globals.browser },
     },
-);
+    plugins: {
+        '@typescript-eslint': tseslint.plugin,
+        'simple-import-sort': simpleImportSort,
+        '@stylistic':         stylistic,
+    },
+    rules: {
+        '@typescript-eslint/no-unused-vars':       ['error', { varsIgnorePattern: '^..', argsIgnorePattern: '^..', ignoreRestSiblings: true }],
+        '@typescript-eslint/no-floating-promises': 'error',
+        '@stylistic/indent':                       'off',
+        '@stylistic/key-spacing':                  ['error', { beforeColon: false, afterColon: true, align: 'value' }],
+        '@stylistic/object-curly-spacing':         ['error', 'always'],
+        '@stylistic/eol-last':                     ['error', 'always'],
+        '@stylistic/semi':                         ['error', 'always'],
+        '@stylistic/quotes':                       ['error', 'single'],
+        '@stylistic/comma-dangle':                 ['error', 'always-multiline'],
+        '@stylistic/arrow-spacing':                'error',
+        '@stylistic/no-trailing-spaces':           'error',
+        'simple-import-sort/imports':              'error',
+        'simple-import-sort/exports':              'error',
+        'vue/script-indent':                       ['error', 4, { baseIndent: 0 }],
+        'vue/html-indent':                         ['error', 4],
+        'vue/max-attributes-per-line':             ['warn', { singleline: 3, multiline: 1 }],
+        'vue/multi-word-component-names':          'off',
+        'vue/component-options-name-casing':       ['error', 'PascalCase'],
+        'vue/custom-event-name-casing':            ['error', 'camelCase'],
+        'vue/define-emits-declaration':            ['error', 'type-based'],
+        'vue/define-props-declaration':            ['error', 'type-based'],
+    },
+};
+
+vueConfig.rules['@stylistic/indent'] = 'off';
+vueConfig.rules['vue/script-indent'] = ['error', 4, { baseIndent: 0 }];
+
 
 const electronNodeConfig = createTypedConfig(
     ['src/electron/**/*.{ts,cts}', 'src/shared/**/*.ts', 'scripts/**/*.ts'],
@@ -116,7 +145,7 @@ export default tseslint.config(
     ...vueBaseConfigs,
     stylisticLegacyDisableConfig,
     customConfig,
-    appConfig,
+    vueConfig,
     electronNodeConfig,
     ignoresConfig,
 );

@@ -21,17 +21,17 @@
         <p>Icon Example:</p>
         <n-icon
             size="40"
-            color="#4CAF50">
-
+            color="#4CAF50"
+        >
             <cash-outline />
         </n-icon>
     </div>
 </template>
 
 <script setup lang="ts">
-import { LanguageSelector } from '@app/features/settings'
-import { CashOutline, InformationCircleOutline } from '@vicons/ionicons5'
-import { NButton, NDivider, NIcon, NSpace } from 'naive-ui'
+import { LanguageSelector } from '@app/features/settings';
+import { CashOutline, InformationCircleOutline } from '@vicons/ionicons5';
+import { NButton, NDivider, NIcon, NSpace } from 'naive-ui';
 
 </script>
 

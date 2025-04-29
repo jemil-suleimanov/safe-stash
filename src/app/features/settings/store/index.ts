@@ -32,7 +32,7 @@ export const useSettingsStore = defineStore('settings', () => {
         if (hasFetchedLookups.value || isLoading.value) {
             return;
         }
-    
+
         isLoading.value = true;
         error.value = null;
         await settingsApi.getAvailableSettings()

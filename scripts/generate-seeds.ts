@@ -6,7 +6,7 @@ const csvLanguagePath = path.resolve(__dirname, '../scripts/languages.csv');
 const outputSqlFilePath = path.resolve(__dirname, '../src/electron/database/seeds.sql');
 
 function parseCsvLine(line: string): string[] {
-    return line.split(',').map(v => v.trim().replace(/^"|"$/g, '').replace(/'/g, "''"));
+    return line.split(',').map(v => v.trim().replace(/^"|"$/g, '').replace(/'/g, '\'\''));
 }
 
 function generateSqlFromCsv(filePath: string, tableName: string, columns: { csvHeader: string, dbColumn: string }[]): string {
@@ -17,7 +17,7 @@ function generateSqlFromCsv(filePath: string, tableName: string, columns: { csvH
     }
 
     const csvData = fs.readFileSync(filePath, 'utf8');
-    const lines = csvData.split('\n').filter(line => line.trim() !== ''); 
+    const lines = csvData.split('\n').filter(line => line.trim() !== '');
 
     if (lines.length < 2) {
         console.warn(`No data rows found in ${filePath}.`);
@@ -96,7 +96,7 @@ try {
     ]);
 
     // Generate Account Type Seeds (Could hardcode these if list is small/static)
-    console.log("Generating Account Type seeds...");
+    console.log('Generating Account Type seeds...');
     allSql += `
 -- Seeds for account_types
 INSERT OR IGNORE INTO account_types (code, name, description) VALUES
@@ -116,12 +116,12 @@ INSERT OR IGNORE INTO account_types (code, name, description) VALUES
         // Write to a single seeds.sql file
         fs.writeFileSync(outputSqlFilePath, allSql.trim());
         console.log(`\nSuccessfully generated seeds SQL at: ${outputSqlFilePath}`);
-        console.log("ACTION REQUIRED: Ensure this seeds.sql file is executed AFTER schema.sql during database initialization.");
+        console.log('ACTION REQUIRED: Ensure this seeds.sql file is executed AFTER schema.sql during database initialization.');
     } else {
         console.log('\nNo SQL generated for any seeds.');
     }
 
 } catch (error) {
-    console.error("\nError generating seed data:", error);
+    console.error('\nError generating seed data:', error);
     process.exit(1);
 }
