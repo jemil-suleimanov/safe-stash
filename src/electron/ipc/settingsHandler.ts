@@ -1,18 +1,13 @@
-import { AppSettingsService } from '@electron/services/appSettingsService'
-import { ipcMain } from 'electron'
+import { AppSettingsService } from '@electron/services/appSettingsService';
+import { IPC_CHANNELS } from '@shared/ipc-channels';
+import { ipcMain } from 'electron';
 
-export function setupSettingsHandlers(appSettingsService: AppSettingsService) {
-    ipcMain.handle('app:get-available-settings', async () => {
-        console.log('IPC Handler: app:get-available-settings')
+import { handleServiceCall } from './handlers/handler-utils';
 
-        try {
-            const settings = await appSettingsService.getAvailableSettings()
-            return settings
-        }
-        catch (error) {
-            console.error('IPC Error getting available settings:', error)
-            // Throwing here sends error back to renderer invoke promise
-            throw new Error('Failed to load setup data.')
-        }
-    })
+export function registerAppSettingsHandlers(appSettingsService: AppSettingsService) {
+    ipcMain.handle(IPC_CHANNELS.GET_APP_SETUP_DATA, async () => {
+        console.log('IPC Handler: ', IPC_CHANNELS.GET_APP_SETUP_DATA);
+
+        return handleServiceCall(() => appSettingsService.getAvailableSettings());
+    });
 }

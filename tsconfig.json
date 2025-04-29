@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    // Common settings shared across Node/Electron and App configs
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

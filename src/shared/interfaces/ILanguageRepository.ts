@@ -1,7 +1,7 @@
-import { Language } from '@shared/domain/Language'
+import { Language } from '@shared/domain/Language';
 
 export interface ILanguageRepository {
-    findAll(): Language[]
+    findAll(): Promise<Language[]>
 
-    findByCode(_code: string): Language | null
+    findByCode(_code: string): Promise<Language | null>
 }

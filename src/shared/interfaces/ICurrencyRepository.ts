@@ -1,7 +1,7 @@
-import { Currency } from '@shared/domain/Currency'
+import { Currency } from '@shared/domain/Currency';
 
 export interface ICurrencyRepository {
-    findAll(): Currency[]
+    findAll(): Promise<Currency[]>
 
-    findByCode(_code: string): Currency | null
+    findByCode(_code: string): Promise<Currency | null>
 }

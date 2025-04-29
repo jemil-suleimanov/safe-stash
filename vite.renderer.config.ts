@@ -1,7 +1,7 @@
-import path from 'node:path'
+import path from 'node:path';
 
-import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     resolve: {
@@ -15,4 +15,4 @@ export default defineConfig({
     build:   {
         target: 'es2022',
     },
-})
+});

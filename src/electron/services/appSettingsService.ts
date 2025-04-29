@@ -1,26 +1,22 @@
-import { ICurrencyRepository } from '@shared/interfaces/ICurrencyRepository'
-import { ILanguageRepository } from '@shared/interfaces/ILanguageRepository'
-import { AppSetupData } from '@shared/types'
+import { ICurrencyRepository } from '@shared/interfaces/ICurrencyRepository';
+import { ILanguageRepository } from '@shared/interfaces/ILanguageRepository';
+import { AppSetupData } from '@shared/types';
 
 export class AppSettingsService {
     constructor(
-        private currencyRepo: ICurrencyRepository,
-        private languages: ILanguageRepository,
+        private currencyRepository: ICurrencyRepository,
+        private languageRepository: ILanguageRepository,
     ) {}
 
-    getAvailableSettings(): AppSetupData {
-        try {
-            const currencies = this.currencyRepo.findAll()
-            const languages = this.languages.findAll()
+    public async getAvailableSettings(): Promise<AppSetupData> {
+        const [currencies, languages] = await Promise.all([
+            this.currencyRepository.findAll(),
+            this.languageRepository.findAll(),
+        ]);
 
-            return {
-                availableCurrencies: currencies,
-                availableLanguages:  languages,
-            }
-        }
-        catch (error) {
-            console.error('Error getting available settings in services', error)
-            return { availableCurrencies: [], availableLanguages: [] }
-        }
+        return {
+            availableCurrencies: currencies,
+            availableLanguages:  languages,
+        };
     }
 }

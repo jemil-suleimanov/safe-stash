@@ -1,11 +1,10 @@
-// tsconfig.app.json (Place this in the root, or adjust extends path if in src/app)
 {
-    "extends": "./tsconfig.json", // Inherit common settings
+    "extends": "./tsconfig.json",
     "compilerOptions": {
         "composite": true,
         "target": "esnext",
         "module": "esnext",
-        "moduleResolution": "Bundler", // Use Bundler for Vite
+        "moduleResolution": "Bundler",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "isolatedModules": true,
     },
@@ -21,4 +20,3 @@
       "src/electron"
     ]
   }
-  
