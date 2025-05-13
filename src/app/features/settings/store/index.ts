@@ -37,8 +37,8 @@ export const useSettingsStore = defineStore('settings', () => {
         error.value = null;
         await settingsApi.getAvailableSettings()
             .then(res => {
-                languages.value = res.data?.availableLanguages ?? [];
-                currencies.value = res.data?.availableCurrencies ?? [];
+                languages.value = res?.availableLanguages ?? [];
+                currencies.value = res?.availableCurrencies ?? [];
                 hasFetchedLookups.value = true;
             })
             .catch(err => {

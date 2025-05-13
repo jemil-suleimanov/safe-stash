@@ -1,4 +1,6 @@
 import { BaseApi } from '@app/api';
+import { handleApiError, handleApiResponse } from '@app/shared/utils/apiUtils';
+
 
 export class SettingsApi extends BaseApi {
     constructor() {
@@ -7,12 +9,11 @@ export class SettingsApi extends BaseApi {
 
     async getAvailableSettings() {
         try {
-            console.log(this.api, 'settings');
-            const settings = await this.api.getAvailableSettings();
-            return settings;
+            const response = await this.rawApi.getAvailableSettings();
+            return handleApiResponse(response);
         } catch (error) {
-            console.log('Error while fetching settings: ', error);
-            throw new Error('Error while fetching settings');
+            handleApiError(error);
+            return null;
         }
     }
 }
