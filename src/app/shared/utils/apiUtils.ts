@@ -26,9 +26,7 @@ export function handleApiError(err: unknown, context: string = 'API call') {
         displayMessage = `An unexpected error occurred during ${context}.`;
     }
 
-    if (!notificationStore.notifications.some(n => n.message === displayMessage && n.type === 'error')) {
-        notificationStore.error(displayMessage);
-    }
+    notificationStore.error(displayMessage);
 
     if (err instanceof Error) {
         throw err;

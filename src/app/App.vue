@@ -1,38 +1,37 @@
 <template>
-    <div>
-        <h1>Welcome to Safe Stash!</h1>
-
-        <p>Testing Naive UI integration:</p>
-
-        <LanguageSelector />
-
-        <n-space justify="center">
-            <n-button type="primary">
-                Click Me!
-            </n-button>
-            <n-button type="info">
-                <template #icon>
-                    <n-icon> <information-circle-outline /> </n-icon>
-                </template>
-                Info
-            </n-button>
-        </n-space>
-        <n-divider />
-        <p>Icon Example:</p>
-        <n-icon
-            size="40"
-            color="#4CAF50"
-        >
-            <cash-outline />
-        </n-icon>
-    </div>
+    <n-config-provider :theme="naiveTheme" :locale="naiveLocale" :date-locale="naiveDateLocale">
+        <n-message-provider>
+            <n-dialog-provider>
+                <n-notification-provider>
+                    <AppContent />
+                </n-notification-provider>
+            </n-dialog-provider>
+        </n-message-provider>
+    </n-config-provider>
 </template>
 
 <script setup lang="ts">
-import { LanguageSelector } from '@app/features/settings';
-import { CashOutline, InformationCircleOutline } from '@vicons/ionicons5';
-import { NButton, NDivider, NIcon, NSpace } from 'naive-ui';
+import { setMessageApi } from '@app/stores/notificationStore';
+import { dateEnUS, enUS, useMessage  } from 'naive-ui';
+import { computed, h, onMounted } from 'vue';
 
+import MainContent from './MainContent.vue';
+
+const naiveTheme = computed(() => null); // For light theme or dynamic theme
+const naiveLocale = computed(() => enUS);
+const naiveDateLocale = computed(() => dateEnUS);
+
+const AppContent = {
+    setup() {
+        // This is where useMessage() is called correctly
+        const message = useMessage();
+        onMounted(() => {
+            setMessageApi(message);
+            console.log('Naive UI Message API installed globally.');
+        });
+        return () => h(MainContent);
+    },
+};
 </script>
 
 <style scoped>
