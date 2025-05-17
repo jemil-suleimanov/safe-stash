@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Welcome to Safe Stash!</h1>
+        <h1>{{ $t('greet') }}</h1>
 
         <p>Testing Naive UI integration:</p>
 

@@ -17,13 +17,12 @@ import { computed, h, onMounted } from 'vue';
 
 import MainContent from './MainContent.vue';
 
-const naiveTheme = computed(() => null); // For light theme or dynamic theme
+const naiveTheme = computed(() => null);
 const naiveLocale = computed(() => enUS);
 const naiveDateLocale = computed(() => dateEnUS);
 
 const AppContent = {
     setup() {
-        // This is where useMessage() is called correctly
         const message = useMessage();
         onMounted(() => {
             setMessageApi(message);
@@ -33,7 +32,3 @@ const AppContent = {
     },
 };
 </script>
-
-<style scoped>
-div { padding: 20px; text-align: center; }
-</style>
