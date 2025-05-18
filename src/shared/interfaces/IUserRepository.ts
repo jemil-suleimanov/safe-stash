@@ -1,6 +1,6 @@
 import { User } from '@shared/domain/User';
 
-export type UserData = Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'email' | 'image'> & { // Fields directly from User domain
+export type UserData = Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'email' | 'image' | 'theme'> & {
     email?: string | null;
     image?: string | null;
 };

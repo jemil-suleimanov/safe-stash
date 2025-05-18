@@ -1,65 +1,24 @@
 <template>
     <div class="register-page-container">
-        <n-card title="Create Your SafeStash Account" class="register-card">
-            <n-form
-                ref="formRef"
-                :model="formData"
-                label-placement="top"
-                label-width="auto"
-                require-mark-placement="right-hanging"
-                @submit.prevent="handleRegister"
-            >
-                <n-grid :cols="2" :x-gap="24">
-                    <n-form-item-gi path="firstName" label="First Name">
-                        <n-input v-model:value="formData.firstName" placeholder="Enter your first name" />
-                    </n-form-item-gi>
-                    <n-form-item-gi path="lastName" label="Last Name">
-                        <n-input v-model:value="formData.lastName" placeholder="Enter your last name" />
-                    </n-form-item-gi>
-
-                    <n-form-item-gi :span="2" path="username" label="Username">
-                        <n-input v-model:value="formData.username" placeholder="Choose a username" />
-                    </n-form-item-gi>
-
-                    <n-form-item-gi path="password" label="Password">
-                        <n-input
-                            v-model:value="formData.password"
-                            type="password"
-                            show-password-on="mousedown"
-                            placeholder="Enter a password"
-                        />
-                    </n-form-item-gi>
-
-                    <n-form-item-gi :span="2" path="passwordHint" label="Password Hint (Optional)">
-                        <n-input v-model:value="formData.passwordHint" placeholder="Enter a password hint" />
-                    </n-form-item-gi>
-
-                    <n-form-item-gi path="languageCode" label="Default Language">
-                        <LanguageSelector />
-                    </n-form-item-gi>
-
-                    <n-form-item-gi path="languageCode" label="Default Currency">
-                        <CurrencySelector />
-                    </n-form-item-gi>
-
-                    <n-form-item-gi :span="2" path="theme" label="Default Theme">
-                        <ThemeSelector />
-                    </n-form-item-gi>
-                </n-grid>
+        <n-card class="register-card">
+            <template #header>
+                <div class="flex items-center">
+                    <span class="card-title">Create Your SafeStash Profile</span>
+                </div>
+            </template>
 
 
+            <n-alert title="Secure your SafeStash app on this device" type="info">
+                <p>This profile protects your local financial data from unauthorized access.</p>
+                <p class="privacy-text">
+                    This profile and your financial data are stored <strong>only on your device</strong> and are never sent anywhere. SafeStash puts your privacy first.
+                </p>
+            </n-alert>
 
-                <n-button
-                    type="primary"
-                    attr-type="submit"
-                    block
-                    :loading="false"
-                    :disabled="false"
-                    style="margin-top: 20px;"
-                >
-                    Register
-                </n-button>
-            </n-form>
+            <n-divider />
+
+            <RegisterForm />
+
             <n-divider title-placement="center">
                 Already have an account?
             </n-divider>
@@ -71,38 +30,16 @@
 </template>
 
 <script setup lang="ts">
-import { CurrencySelector, LanguageSelector, ThemeSelector } from '@app/features/settings';
-import { useSettingsStore } from '@app/features/settings/store';
-import type { UserPayloadData } from '@shared/dtos/auth.dto';
 import {
-    type FormInst, // For form validation later
-    NButton,     NCard, NDivider,
-    NForm, NFormItemGi, NGrid,
-    NInput, NRadio,     NRadioGroup, NSpace } from 'naive-ui';
-import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+    NButton,
+    NCard,
+    NDivider,
+} from 'naive-ui';
 
-const { selectedLanguage } = storeToRefs(useSettingsStore());
-
-const formRef = ref<FormInst | null>(null); // For Naive UI form validation API later
-const formData = ref<UserPayloadData>({
-    username:     '',
-    firstName:    '',
-    lastName:     '',
-    password:     '',
-    passwordHint: '',
-    currency:     '',
-    language:     selectedLanguage.value || 'en',
-    theme:        'light',    // Default theme
-});
-
-async function handleRegister() {
-    console.log('regsitering');
-}
+import RegisterForm from '../components/RegisterForm.vue';
 
 
 function navigateToLogin() {
-    // router.push({ name: 'Login' }); // Assuming a login route
     alert('Navigate to Login page (to be implemented)');
 }
 

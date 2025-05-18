@@ -5,8 +5,8 @@ export class User {
     constructor(
         public readonly id: string | number,
         public readonly username: string,
-        public readonly firstName: string,
-        public readonly lastName: string,
+        public readonly firstName: string | null,
+        public readonly lastName: string | null,
         public readonly email: string | null,
         public readonly image: string | null,
         public readonly language: Language['code'],

@@ -8,8 +8,8 @@ import { SqliteDB } from '../connection';
 interface UserRow {
     id:            number;
     username:      string;
-    first_name:    string;
-    last_name:     string;
+    first_name:    string | null;
+    last_name:     string | null;
     email:         string | null;
     password_hash: string;
     password_hint: string | null;
@@ -134,7 +134,7 @@ export class UserRepository implements IUserRepository {
                 image:        userData.image ?? null,
                 languageCode: userData.language,
                 currencyCode: userData.currency,
-                theme:        userData.theme,
+                theme:        'light', // Default theme for now
             });
 
             if (result.changes === 0 || !result.lastInsertRowid) {

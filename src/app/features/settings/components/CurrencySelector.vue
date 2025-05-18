@@ -16,7 +16,7 @@ import { computed, onMounted } from 'vue';
 
 const { currencies, defaultCurrency } = storeToRefs(useSettingsStore());
 
-const { getCurrencies, setLanguage } = useSettingsStore();
+const { getCurrencies, setCurrency } = useSettingsStore();
 
 
 const currencyOptions = computed(() => {
@@ -33,6 +33,6 @@ onMounted(() => {
 });
 
 function onChange(value: SupportedLocales) {
-    setLanguage(value);
+    setCurrency(value);
 }
 </script>

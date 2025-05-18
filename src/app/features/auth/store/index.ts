@@ -11,9 +11,10 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
     const isAuthenticated = ref(false);
 
-    async function register(userData: UserPayloadData) {
+    async function registerUser(userData: UserPayloadData) {
         isLoading.value = true;
         error.value = null;
+
         try {
             const response = await AuthApi.register(userData);
             if (response) {
@@ -39,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
         error,
         isLoading,
         isAuthenticated,
-        register,
+        registerUser,
         logout,
     };
 });

@@ -24,10 +24,6 @@ export class UserService {
                 throw new ValidationError('Password must be at least 6 characters long.', null);
             }
 
-            if (!['light', 'dark'].includes(registrationData.theme)) {
-                throw new ValidationError('Theme must be \'light\' or \'dark\'.', null);
-            }
-
             const existingUser = await this.userRepository.findByUsername(registrationData.username);
             if (existingUser) {
                 throw new ValidationError('Username already exists.', null);
