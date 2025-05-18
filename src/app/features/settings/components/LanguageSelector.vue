@@ -4,7 +4,7 @@
         placeholder="Choose language"
         :options="languageOptions"
         filterable
-        @update:value="handleLanguageChange"
+        @update:value="onChange"
     />
 </template>
 
@@ -16,7 +16,7 @@ import { computed, onMounted, ref } from 'vue';
 
 const { languages } = storeToRefs(useSettingsStore());
 
-const { getLanguages } = useSettingsStore();
+const { getLanguages, setLanguage } = useSettingsStore();
 
 const currentLocale = ref(i18n.global.locale);
 
@@ -33,7 +33,7 @@ onMounted(() => {
     getLanguages();
 });
 
-function handleLanguageChange(value: SupportedLocales) {
-    i18n.global.locale.value = value;
+function onChange(value: SupportedLocales) {
+    setLanguage(value);
 }
 </script>

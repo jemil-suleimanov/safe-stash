@@ -1,3 +1,4 @@
+import { SupportedLocales, updateLocale } from '@app/shared/plugins/i18n';
 import { Currency } from '@shared/domain/Currency';
 import { Language } from '@shared/domain/Language';
 import { defineStore } from 'pinia';
@@ -11,6 +12,9 @@ export const useSettingsStore = defineStore('settings', () => {
     const isLoading = ref<boolean>(false);
     const error = ref<string | null>(null);
     const hasFetchedLookups = ref(false);
+    const selectedLanguage = ref<SupportedLocales | null>(null);
+    const defaultCurrency = ref<Currency | null>(null);
+    const theme = ref<'light' | 'dark'>('light');
 
     function getLanguages() {
         if (!languages.value.length) {
@@ -26,6 +30,29 @@ export const useSettingsStore = defineStore('settings', () => {
         }
 
         return languages;
+    }
+
+    function setTheme(newTheme: 'light' | 'dark') {
+        console.log('Setting theme to:', newTheme);
+        theme.value = newTheme;
+    }
+
+    function setLanguage(language: SupportedLocales) {
+        if (languages.value.some(lang => lang.code === language)) {
+            selectedLanguage.value = language;
+            updateLocale(language);
+        } else {
+            console.error(`Language ${language} is not available.`);
+        }
+    }
+
+    function setCurrency(currency: string) {
+        const newCurrency = currencies.value.find(cur => cur.code === currency);
+        if (newCurrency) {
+            defaultCurrency.value = newCurrency;
+        } else {
+            console.error(`Currency ${currency} is not available.`);
+        }
     }
 
     async function fetchAvailableSettings() {
@@ -53,10 +80,16 @@ export const useSettingsStore = defineStore('settings', () => {
     return {
         languages,
         currencies,
+        theme,
         error,
         isLoading,
+        selectedLanguage,
+        defaultCurrency,
         fetchAvailableSettings,
         getLanguages,
         getCurrencies,
+        setLanguage,
+        setCurrency,
+        setTheme,
     };
 });
