@@ -6,8 +6,6 @@ import { handleServiceCall } from './handlers/handler-utils';
 
 export function registerAppSettingsHandlers(appSettingsService: AppSettingsService) {
     ipcMain.handle(IPC_CHANNELS.GET_APP_SETUP_DATA, async () => {
-        console.log('IPC Handler: ', IPC_CHANNELS.GET_APP_SETUP_DATA);
-
         return handleServiceCall(() => appSettingsService.getAvailableSettings());
     });
 }

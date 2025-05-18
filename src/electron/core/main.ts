@@ -2,8 +2,10 @@ import path from 'node:path';
 
 import { CurrencyRepository } from '@electron/database/repositories/currencyRepository';
 import { LanguageRepository } from '@electron/database/repositories/languageRepository';
+import { UserRepository } from '@electron/database/repositories/userReposity';
 import { setupIpcHandlers } from '@electron/ipc/index';
 import { AppSettingsService } from '@electron/services/appSettingsService';
+import { UserService } from '@electron/services/userService';
 import { app, BrowserWindow } from 'electron';
 import { dialog } from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
@@ -76,8 +78,12 @@ async function initializeBackend() {
         const db = initializeDatabase();
         const currencyRepo = new CurrencyRepository(db);
         const languageRepo = new LanguageRepository(db);
+        const userRepo = new UserRepository(db);
+
         const appSettingsService = new AppSettingsService(currencyRepo, languageRepo);
-        setupIpcHandlers({ appSettingsService });
+        const userService = new UserService(userRepo, appSettingsService);
+
+        setupIpcHandlers({ appSettingsService, userService });
     } catch (error) {
         console.error('FATAL: Application backend initialization failed:', error);
         dialog.showErrorBox('Initialization Error', `Failed to initialize application services: ${error}`);

@@ -14,12 +14,29 @@ const config: ForgeConfig = {
         ignore: [
             /node_modules\/(?!(better-sqlite3|bindings|file-uri-to-path)\/)/,
         ],
-        extraResource: ['src/electron/database/schema.sql'],
-        icon:          './assets/icons/safe-stash-icon.png',
+        extraResource: [
+            './src/electron/database/schema.sql',
+            './src/electron/database/seeds.sql',
+        ],
+        icon: './assets/icons/safe-stash-icon.icns',
     },
     rebuildConfig: {},
-    makers:        [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
-    plugins:       [
+    makers:        [
+        new MakerSquirrel({
+            name:      'safe-stash',
+            setupIcon: './assets/icons/safe-stash-icon.ico',
+        }),
+        new MakerZIP({}, ['darwin']),
+        new MakerRpm({}),
+        new MakerDeb({
+            options: {
+                icon:       './assets/icons/safe-stash-icon.png',
+                categories: ['Utility'],
+                mimeType:   ['application/x-safe-stash'],
+            },
+        }),
+    ],
+    plugins: [
         new AutoUnpackNativesPlugin({}),
         new VitePlugin({
             build: [
@@ -37,7 +54,7 @@ const config: ForgeConfig = {
             renderer: [
                 {
                     name:   'main_window',
-                    config: 'vite.renderer.config.ts',
+                    config: 'vite.renderer.config.mts',
                 },
             ],
         }),
