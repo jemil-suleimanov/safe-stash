@@ -16,6 +16,16 @@ class AuthApi extends BaseApi {
             return null;
         }
     }
+
+    public async login(username: string, password: string) {
+        try {
+            const response = await this.rawApi.login(username, password);
+            return handleApiResponse(response);
+        } catch (error) {
+            handleApiError(error);
+            return null;
+        }
+    }
 }
 
 const authApi = new AuthApi();

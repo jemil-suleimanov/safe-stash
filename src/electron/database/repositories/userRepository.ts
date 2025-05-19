@@ -1,11 +1,12 @@
 import { User } from '@shared/domain/User';
 import { DatabaseError } from '@shared/errors/AppError';
-import { IUserRepository, UserData } from '@shared/interfaces/IUserRepository';
+import { IUserRepository } from '@shared/interfaces/IUserRepository';
+import { UserDataForCreation } from '@shared/types/user.types';
 import { Statement } from 'better-sqlite3';
 
 import { SqliteDB } from '../connection';
 
-interface UserRow {
+export interface UserRow {
     id:            number;
     username:      string;
     first_name:    string | null;
@@ -16,12 +17,12 @@ interface UserRow {
     image:         string | null;
     currency_code: string;
     language_code: string;
-    theme:         string;
+    theme:         'light' | 'dark';
     created_at:    string;
     updated_at:    string;
 }
 
-function rowToUser(row: UserRow): User {
+export function rowToUser(row: UserRow) {
     return new User(
         row.id,
         row.username,
@@ -32,11 +33,10 @@ function rowToUser(row: UserRow): User {
         row.language_code,
         row.currency_code,
         row.theme,
-        row.created_at,
-        row.updated_at,
+        new Date(row.created_at),
+        new Date(row.updated_at),
     );
 }
-
 
 export class UserRepository implements IUserRepository {
     private db:                 SqliteDB;
@@ -48,17 +48,17 @@ export class UserRepository implements IUserRepository {
     constructor(db: SqliteDB) {
         this.db = db;
         this.findByIdStmt = this.db.prepare(`
-            SELECT id, username, first_name, last_name, email, password_hint, image, language_code, currency_code, theme, created_at, updated_at
+            SELECT id, username, first_name, last_name, email, password_hash, password_hint, image, language_code, currency_code, theme, created_at, updated_at
             FROM users
             WHERE id = ?
         `);
         this.findByUsernameStmt = this.db.prepare(`
-            SELECT id, username, first_name, last_name, email, password_hint, image, language_code, currency_code, theme, created_at, updated_at
+            SELECT id, username, first_name, last_name, email, password_hash, password_hint, image, language_code, currency_code, theme, created_at, updated_at
             FROM users
             WHERE username = ?
         `);
         this.findByEmailStmt = this.db.prepare(`
-            SELECT id, username, first_name, last_name, email, password_hint, image, language_code, currency_code, theme, created_at, updated_at
+            SELECT id, username, first_name, last_name, email, password_hash, password_hint, image, language_code, currency_code, theme, created_at, updated_at
             FROM users
             WHERE email = ?
         `);
@@ -118,8 +118,14 @@ export class UserRepository implements IUserRepository {
         }
     }
 
+    public async findUserRowByUsername(username: string): Promise<UserRow | null> {
+        const row = this.findByUsernameStmt.get(username) as UserRow | undefined;
+
+        return row || null;
+    }
+
     public async create(
-        userData: UserData,
+        userData: UserDataForCreation,
         passwordHash: string,
         passwordHint: string,
     ): Promise<User> {
@@ -132,8 +138,8 @@ export class UserRepository implements IUserRepository {
                 passwordHash,
                 passwordHint,
                 image:        userData.image ?? null,
-                languageCode: userData.language,
-                currencyCode: userData.currency,
+                languageCode: userData.languageCode,
+                currencyCode: userData.currencyCode,
                 theme:        'light', // Default theme for now
             });
 

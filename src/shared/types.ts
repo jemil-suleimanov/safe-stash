@@ -8,13 +8,10 @@ export interface AppSetupData {
     availableLanguages:  Language[]
 }
 
-export interface DummyResponseData {
-    message: string;
-}
-
 export interface IDbApi {
     getAvailableSettings(): Promise<DbApiResponse<AppSetupData>>;
     register(userData: UserPayloadData): Promise<DbApiResponse<User>>;
+    login(username: string, password: string): Promise<DbApiResponse<User>>;
 }
 
 export interface DbApiResponse<T> {

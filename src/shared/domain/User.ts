@@ -3,16 +3,16 @@ import { Language } from './Language';
 
 export class User {
     constructor(
-        public readonly id: string | number,
+        public readonly id: number,
         public readonly username: string,
         public readonly firstName: string | null,
         public readonly lastName: string | null,
-        public readonly email: string | null,
-        public readonly image: string | null,
-        public readonly language: Language['code'],
-        public readonly currency: Currency['code'],
-        public readonly theme: string,
-        public readonly createdAt: string,
-        public readonly updatedAt: string,
+        public readonly languageCode: Language['code'],
+        public readonly currencyCode: Currency['code'],
+        public readonly theme: 'light' | 'dark',
+        public readonly createdAt: Date,
+        public readonly updatedAt: Date,
+        public readonly email?: string | null,
+        public readonly image?: string | null,
     ) {}
 }

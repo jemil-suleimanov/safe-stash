@@ -6,6 +6,6 @@ export interface UserPayloadData {
     password:     string;
     passwordHint: string;
     image?:       string | null;
-    language:     string;
-    currency:     string;
+    languageCode: string;
+    currencyCode: string;
 }

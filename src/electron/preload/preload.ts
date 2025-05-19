@@ -7,6 +7,8 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 const api: IDbApi = {
     getAvailableSettings: () => ipcRenderer.invoke(IPC_CHANNELS.GET_APP_SETUP_DATA),
+    register:             () => ipcRenderer.invoke(IPC_CHANNELS.USER_REGISTER),
+    login:                () => ipcRenderer.invoke(IPC_CHANNELS.USER_LOGIN),
 };
 
 try {

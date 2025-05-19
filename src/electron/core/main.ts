@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import { CurrencyRepository } from '@electron/database/repositories/currencyRepository';
 import { LanguageRepository } from '@electron/database/repositories/languageRepository';
-import { UserRepository } from '@electron/database/repositories/userReposity';
+import { UserRepository } from '@electron/database/repositories/userRepository';
 import { setupIpcHandlers } from '@electron/ipc/index';
 import { AppSettingsService } from '@electron/services/appSettingsService';
 import { UserService } from '@electron/services/userService';

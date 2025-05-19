@@ -1,17 +1,15 @@
+import { rowToUser } from '@electron/database/repositories/userRepository';
 import { User } from '@shared/domain/User';
 import { UserPayloadData } from '@shared/dtos/auth.dto';
 import { ValidationError } from '@shared/errors/AppError';
 import { IUserRepository } from '@shared/interfaces/IUserRepository';
 import bcrypt from 'bcryptjs';
 
-import { AppSettingsService } from './appSettingsService';
-
 const SALT_ROUNDS = 10;
 
 export class UserService {
     constructor(
         private userRepository: IUserRepository,
-        private appSettingsService: AppSettingsService,
     ) {}
 
     public async registerUser(registrationData: UserPayloadData): Promise<User> {
@@ -36,7 +34,7 @@ export class UserService {
                 }
             }
 
-            const passwordHash = await bcrypt.hash(registrationData.password, SALT_ROUNDS);
+            const passwordHash = await this.encryptPassword(registrationData.password);
 
             const user = await this.userRepository.create(
                 registrationData,
@@ -45,8 +43,39 @@ export class UserService {
             );
             return user;
         } catch (error) {
-            console.error('Error during registration:', error);
+            console.error('Error during registration: ', error);
             throw new Error('Registration failed: ' + error);
         }
+    }
+
+    public async login(username: string, password: string): Promise<User | null> {
+        try {
+            // validation
+            if (!username || username === '' || !password || password === '') {
+                throw new ValidationError('Incorrect username or password provided', null);
+            }
+
+            const user = await this.userRepository.findUserRowByUsername(username);
+
+            if (!user) {
+                throw new ValidationError('Invalid username or password.', null);
+            }
+
+            const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+            if (!passwordMatch) {
+                throw new ValidationError('Invalid username or password.', null);
+            }
+
+            return rowToUser(user);
+        } catch (error) {
+            console.error('Error during login: ', error);
+            throw new Error('Login failed: ' + error);
+        }
+    }
+
+    private async encryptPassword(password: string): Promise<string> {
+        const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+        return passwordHash;
     }
 }
