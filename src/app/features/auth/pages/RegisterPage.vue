@@ -17,12 +17,12 @@
 
             <n-divider />
 
-            <RegisterForm />
+            <RegisterForm @submit="register" />
 
             <n-divider title-placement="center">
                 Already have an account?
             </n-divider>
-            <n-button block @click="navigateToLogin">
+            <n-button block @click="goToLogin">
                 Login Here
             </n-button>
         </n-card>
@@ -30,17 +30,29 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@app/features/auth';
+import { UserCreatePayload } from '@shared/dtos/auth.dto';
 import {
     NButton,
     NCard,
     NDivider,
 } from 'naive-ui';
+import { useRouter } from 'vue-router';
 
 import RegisterForm from '../components/RegisterForm.vue';
 
+const { registerUser } = useAuthStore();
 
-function navigateToLogin() {
-    alert('Navigate to Login page (to be implemented)');
+const router = useRouter();
+
+async function goToLogin() {
+    await router.push('/login');
+}
+
+async function register(userData: UserCreatePayload) {
+    await registerUser(userData).then(async () => {
+        await goToLogin();
+    });
 }
 
 </script>
@@ -50,7 +62,6 @@ function navigateToLogin() {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 90vh; /* Adjust as needed */
     padding: 20px;
 }
 

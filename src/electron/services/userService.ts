@@ -1,6 +1,6 @@
 import { rowToUser } from '@electron/database/repositories/userRepository';
 import { User } from '@shared/domain/User';
-import { UserPayloadData } from '@shared/dtos/auth.dto';
+import { UserCreatePayload, UserLoginPayload } from '@shared/dtos/auth.dto';
 import { ValidationError } from '@shared/errors/AppError';
 import { IUserRepository } from '@shared/interfaces/IUserRepository';
 import bcrypt from 'bcryptjs';
@@ -12,7 +12,7 @@ export class UserService {
         private userRepository: IUserRepository,
     ) {}
 
-    public async registerUser(registrationData: UserPayloadData): Promise<User> {
+    public async registerUser(registrationData: UserCreatePayload): Promise<User> {
         try {
 
             if (!registrationData.username || registrationData.username.length < 3) {
@@ -48,9 +48,10 @@ export class UserService {
         }
     }
 
-    public async login(username: string, password: string): Promise<User | null> {
+    public async login(loginData: UserLoginPayload): Promise<User | null> {
         try {
             // validation
+            const { username, password } = loginData;
             if (!username || username === '' || !password || password === '') {
                 throw new ValidationError('Incorrect username or password provided', null);
             }

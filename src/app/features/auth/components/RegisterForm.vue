@@ -86,10 +86,10 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@app/features/auth/store';
+import { useAuthStore } from '@app/features/auth';
 import { CurrencySelector, LanguageSelector, useSettingsStore } from '@app/features/settings';
 import { useNotificationStore } from '@app/stores/notificationStore';
-import type { UserPayloadData } from '@shared/dtos/auth.dto';
+import type { UserCreatePayload } from '@shared/dtos/auth.dto';
 import { HelpCircleOutline } from '@vicons/ionicons5';
 import {
     type FormInst,
@@ -100,8 +100,11 @@ import {
 import { storeToRefs } from 'pinia';
 import { reactive, ref, watch } from 'vue';
 
-const { registerUser } = useAuthStore();
 const notificationStore = useNotificationStore();
+
+const emit = defineEmits<{
+    (e: 'submit', userData: UserCreatePayload);
+}>();
 
 const { selectedLanguage, defaultCurrency } = storeToRefs(useSettingsStore());
 const { isLoading, error } = storeToRefs(useAuthStore());
@@ -179,19 +182,19 @@ async function onFormSubmit() {
         return;
     }
 
-    const payload: UserPayloadData = {
+    const payload: UserCreatePayload = {
         username:     formData.value.username,
         firstName:    formData.value.firstName || null,
         lastName:     formData.value.lastName || null,
         email:        formData.value.email || null,
         password:     formData.value.password,
         passwordHint: formData.value.passwordHint,
-        language:     formData.value.languageCode,
-        currency:     formData.value.currencyCode,
+        languageCode: formData.value.languageCode,
+        currencyCode: formData.value.currencyCode,
     };
 
     notificationStore.info('Creating your profile...');
-    registerUser(payload);
+    emit('submit', payload);
 }
 </script>
 

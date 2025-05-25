@@ -6,7 +6,7 @@ import { UserRepository } from '@electron/database/repositories/userRepository';
 import { setupIpcHandlers } from '@electron/ipc/index';
 import { AppSettingsService } from '@electron/services/appSettingsService';
 import { UserService } from '@electron/services/userService';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu, MenuItem } from 'electron';
 import { dialog } from 'electron';
 import squirrelStartup from 'electron-squirrel-startup';
 
@@ -30,6 +30,33 @@ const createWindow = () => {
     });
 
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+        mainWindow.webContents.on('context-menu', (event, params) => {
+            const menu = new Menu();
+            if (params.isEditable || (params.selectionText && params.selectionText.trim() !== '')) {
+                menu.append(new MenuItem({ label: 'Cut', role: 'cut', enabled: params.editFlags.canCut }));
+                menu.append(new MenuItem({ label: 'Copy', role: 'copy', enabled: params.editFlags.canCopy }));
+                menu.append(new MenuItem({ label: 'Paste', role: 'paste', enabled: params.editFlags.canPaste }));
+                menu.append(new MenuItem({ type: 'separator' }));
+            }
+            menu.append(new MenuItem({
+                label: 'Inspect Element',
+                click: () => { mainWindow!.webContents.inspectElement(params.x, params.y); },
+            }));
+            menu.append(new MenuItem({ type: 'separator' }));
+            menu.append(new MenuItem({ label: 'Reload', role: 'reload' }));
+            menu.append(new MenuItem({ label: 'Force Reload', role: 'forceReload' }));
+            menu.append(new MenuItem({ label: 'Toggle Developer Tools', role: 'toggleDevTools' }));
+            menu.popup({ window: mainWindow! });
+
+            mainWindow.webContents.on('did-navigate', (event, url) => {
+                console.log(`Electron Window Navigated To: ${url}`);
+            });
+            mainWindow.webContents.on('did-navigate-in-page', (event, url, isMainFrame) => {
+                if (isMainFrame) {
+                    console.log(`Electron Window In-Page Navigation: ${url}`);
+                }
+            });
+        });
         mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
         mainWindow.webContents.openDevTools();
     }
@@ -81,7 +108,7 @@ async function initializeBackend() {
         const userRepo = new UserRepository(db);
 
         const appSettingsService = new AppSettingsService(currencyRepo, languageRepo);
-        const userService = new UserService(userRepo, appSettingsService);
+        const userService = new UserService(userRepo);
 
         setupIpcHandlers({ appSettingsService, userService });
     } catch (error) {

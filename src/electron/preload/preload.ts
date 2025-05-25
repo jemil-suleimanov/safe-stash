@@ -1,14 +1,15 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
+import { UserCreatePayload, UserLoginPayload } from '@shared/dtos/auth.dto';
 import { IPC_CHANNELS } from '@shared/ipc-channels';
 import { IDbApi } from '@shared/types';
 import { contextBridge, ipcRenderer } from 'electron';
 
 const api: IDbApi = {
     getAvailableSettings: () => ipcRenderer.invoke(IPC_CHANNELS.GET_APP_SETUP_DATA),
-    register:             () => ipcRenderer.invoke(IPC_CHANNELS.USER_REGISTER),
-    login:                () => ipcRenderer.invoke(IPC_CHANNELS.USER_LOGIN),
+    register:             (userRegisterPayload: UserCreatePayload) => ipcRenderer.invoke(IPC_CHANNELS.USER_REGISTER, userRegisterPayload),
+    login:                (userLoginPayload: UserLoginPayload) => ipcRenderer.invoke(IPC_CHANNELS.USER_LOGIN, userLoginPayload),
 };
 
 try {

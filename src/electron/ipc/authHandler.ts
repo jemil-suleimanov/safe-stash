@@ -1,5 +1,5 @@
 import { UserService } from '@electron/services/userService';
-import { UserPayloadData } from '@shared/dtos/auth.dto';
+import { UserCreatePayload, UserLoginPayload } from '@shared/dtos/auth.dto';
 import { IPC_CHANNELS } from '@shared/ipc-channels';
 import { ipcMain } from 'electron';
 
@@ -10,7 +10,7 @@ export function registerAuthHandlers(
 ) {
     ipcMain.handle(IPC_CHANNELS.USER_REGISTER, async (
         _event,
-        userData: UserPayloadData,
+        userData: UserCreatePayload,
     ) => {
         return handleServiceCall(() => userService.registerUser(
             userData,
@@ -19,11 +19,10 @@ export function registerAuthHandlers(
 
     ipcMain.handle(IPC_CHANNELS.USER_LOGIN, async (
         _event,
-        username: string,
-        password: string,
+        userLoginData: UserLoginPayload,
     ) => {
         return handleServiceCall(() => userService.login(
-            username, password,
+            userLoginData,
         ));
     });
 };

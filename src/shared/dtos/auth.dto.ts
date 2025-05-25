@@ -1,4 +1,4 @@
-export interface UserPayloadData {
+export interface UserCreatePayload {
     username:     string;
     firstName:    string | null;
     lastName:     string | null;
@@ -8,4 +8,9 @@ export interface UserPayloadData {
     image?:       string | null;
     languageCode: string;
     currencyCode: string;
+}
+
+export interface UserLoginPayload {
+    username: string;
+    password: string;
 }

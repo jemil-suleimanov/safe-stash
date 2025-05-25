@@ -1,7 +1,7 @@
 import { Currency } from './domain/Currency';
 import { Language } from './domain/Language';
 import { User } from './domain/User';
-import { UserPayloadData } from './dtos/auth.dto';
+import { UserCreatePayload, UserLoginPayload } from './dtos/auth.dto';
 
 export interface AppSetupData {
     availableCurrencies: Currency[]
@@ -10,8 +10,8 @@ export interface AppSetupData {
 
 export interface IDbApi {
     getAvailableSettings(): Promise<DbApiResponse<AppSetupData>>;
-    register(userData: UserPayloadData): Promise<DbApiResponse<User>>;
-    login(username: string, password: string): Promise<DbApiResponse<User>>;
+    register(userData: UserCreatePayload): Promise<DbApiResponse<User>>;
+    login(userLoginData: UserLoginPayload): Promise<DbApiResponse<User>>;
 }
 
 export interface DbApiResponse<T> {

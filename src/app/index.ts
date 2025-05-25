@@ -1,4 +1,4 @@
-import './index.css';
+import './styles/index.css';
 
 import App from '@app/App.vue';
 import { i18n } from '@app/shared/plugins/i18n';

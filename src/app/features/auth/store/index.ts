@@ -1,5 +1,5 @@
 import { User } from '@shared/domain/User';
-import { UserPayloadData } from '@shared/dtos/auth.dto';
+import { UserCreatePayload, UserLoginPayload } from '@shared/dtos/auth.dto';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null);
     const isAuthenticated = ref(false);
 
-    async function registerUser(userData: UserPayloadData) {
+    async function registerUser(userData: UserCreatePayload) {
         isLoading.value = true;
         error.value = null;
 
@@ -35,6 +35,13 @@ export const useAuthStore = defineStore('auth', () => {
         isAuthenticated.value = false;
     }
 
+    function login(userData: UserLoginPayload) {
+        return AuthApi.login(userData).then((res) => {
+            isAuthenticated.value = true;
+            user.value = res;
+        });
+    }
+
     return {
         user,
         error,
@@ -42,5 +49,6 @@ export const useAuthStore = defineStore('auth', () => {
         isAuthenticated,
         registerUser,
         logout,
+        login,
     };
 });

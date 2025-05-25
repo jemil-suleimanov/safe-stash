@@ -1,6 +1,8 @@
 import { Currency } from './Currency';
 import { Language } from './Language';
 
+export type Email = string | null;
+
 export class User {
     constructor(
         public readonly id: number,
@@ -12,7 +14,7 @@ export class User {
         public readonly theme: 'light' | 'dark',
         public readonly createdAt: Date,
         public readonly updatedAt: Date,
-        public readonly email?: string | null,
+        public readonly email?: Email,
         public readonly image?: string | null,
     ) {}
 }

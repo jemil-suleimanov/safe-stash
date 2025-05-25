@@ -28,13 +28,13 @@ export function rowToUser(row: UserRow) {
         row.username,
         row.first_name,
         row.last_name,
-        row.email,
-        row.image,
         row.language_code,
         row.currency_code,
         row.theme,
         new Date(row.created_at),
         new Date(row.updated_at),
+        row.email,
+        row.image,
     );
 }
 
