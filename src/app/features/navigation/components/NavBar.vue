@@ -40,7 +40,7 @@
     </nav>
 </template>
 
-  <script setup lang="ts">
+<script setup lang="ts">
 import {
     BarChartOutline as ReportsIcon,
     HomeOutline as DashboardIcon,
@@ -67,10 +67,7 @@ const navItems = shallowRef<NavItem[]>([
     { label: 'Transactions', routeName: 'Transactions', icon: TransactionsIcon },
     { label: 'Budgets', routeName: 'Budgets', icon: BudgetsIcon },
     { label: 'Reports', routeName: 'Reports', icon: ReportsIcon },
+    { label: 'Accounts', routeName: 'Accounts', icon: ReportsIcon },
 ]);
 
 </script>
-
-<style scoped>
-
-</style>

@@ -1,3 +1,83 @@
 {
-    "greet": "Hello"
+    "greet": "Create Your SafeStash Profile",
+    "register": {
+        "info": {
+            "title": "Secure your SafeStash app on this device",
+            "line1": "This profile protects your local financial data from unauthorized access.",
+            "line2": "This profile and your financial data are stored only on your device and are never sent anywhere. SafeStash puts your privacy first."
+        },
+        "account": "Already have an account?",
+        "login": "Login Here",
+        "form": {
+            "firstNameLabel": "First Name (Optional)",
+            "firstNamePlaceholder": "Enter your first name",
+            "lastNameLabel": "Last Name (Optional)",
+            "lastNamePlaceholder": "Enter your last name",
+            "usernameLabel": "Username",
+            "usernamePlaceholder": "Choose a local username",
+            "passwordLabel": "Password",
+            "passwordPlaceholder": "Enter a password",
+            "confirmPasswordLabel": "Confirm Password",
+            "confirmPasswordPlaceholder": "Confirm your password",
+            "passwordHintLabel": "Password Hint",
+            "passwordHintPlaceholder": "e.g., My first pet's name",
+            "passwordHintInfo": {
+                "title": "Password Hint",
+                "tooltip": "SafeStash is a fully offline app and cannot send password recovery links. This hint will be shown to you locally if you forget your password. Make it memorable for you, but not obvious to others."
+            },
+            "languageCodeLabel": "Default Language",
+            "currencyCodeLabel": "Default Currency",
+            "submitButton": "Create Profile & Secure App",
+            "validation": {
+                "usernameRequired": "Username is required.",
+                "usernameMin": "Username must be at least 3 characters long.",
+                "passwordRequired": "Password is required.",
+                "passwordMin": "Password must be at least 6 characters long.",
+                "passwordHintRequired": "Password hint is required.",
+                "passwordHintMin": "Hint should be at least 3 characters long for effectiveness.",
+                "confirmPasswordRequired": "Please confirm your password.",
+                "confirmPasswordMismatch": "Passwords do not match.",
+                "languageCodeRequired": "Please select a default language.",
+                "currencyCodeRequired": "Please select a default currency."
+            },
+            "formError": "Please fill in all required fields correctly."
+        }
+    },
+    "login": {
+        "title": "Unlock SafeStash",
+        "subtitle": "Enter your local profile credentials to unlock SafeStash on this device.",
+        "forgotPassword": "Forgot Password?",
+        "passwordHintTitle": "Password Hint",
+        "enterUsernameForHint": "Please enter your username above to get your hint.",
+        "usernameInputPlaceholder": "Enter username to get hint",
+        "getHintButton": "Get Hint",
+        "gotItButton": "Got it!",
+        "noProfileYet": "No profile yet?",
+        "createLocalProfile": "Create a Local Profile",
+        "localSecurityNote": "Your profile and data are secured locally on this device.",
+        "form": {
+            "usernameLabel": "Username",
+            "usernamePlaceholder": "Enter your username",
+            "passwordLabel": "Password",
+            "passwordPlaceholder": "Enter your password",
+            "submitButton": "Login",
+            "validation": {
+                "usernameRequired": "Username is required.",
+                "passwordRequired": "Password is required."
+            }
+        }
+    },
+    "account": {
+        "type": {
+            "CASH": "Cash",
+            "BANK_CHK": "Checking account",
+            "BANK_SAV": "Savings account",
+            "CARD_CR": "Credit Card",
+            "CARD_DB": "Debit Card",
+            "INVEST": "Investments account",
+            "LOAN": "Loan",
+            "EWALLET": "E-Wallet",
+            "OTHER": "Other"    
+        }
+    }
 }

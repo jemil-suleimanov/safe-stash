@@ -38,6 +38,12 @@ const routes = [
                 component: () => import('@app/features/report/ReportsPage.vue'),
                 meta:      { title: 'Financial Reports' },
             },
+            {
+                path:      'accounts',
+                name:      'Accounts',
+                component: () => import('@app/features/account/pages/AccountPage.vue'),
+                meta:      { title: 'Accounts' },
+            },
             { path: '', redirect: { name: 'Dashboard' } },
         ],
     },

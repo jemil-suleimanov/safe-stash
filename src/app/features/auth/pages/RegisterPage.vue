@@ -3,15 +3,15 @@
         <n-card class="register-card">
             <template #header>
                 <div class="flex items-center">
-                    <span class="card-title">Create Your SafeStash Profile</span>
+                    <span class="card-title">{{ $t('greet') }}</span>
                 </div>
             </template>
 
 
-            <n-alert title="Secure your SafeStash app on this device" type="info">
-                <p>This profile protects your local financial data from unauthorized access.</p>
+            <n-alert :title="$t('register.info.title')" type="info">
+                <p>{{ $t('register.info.line1') }}</p>
                 <p class="privacy-text">
-                    This profile and your financial data are stored <strong>only on your device</strong> and are never sent anywhere. SafeStash puts your privacy first.
+                    {{ $t('register.info.line2') }}
                 </p>
             </n-alert>
 
@@ -20,10 +20,10 @@
             <RegisterForm @submit="register" />
 
             <n-divider title-placement="center">
-                Already have an account?
+                {{ $t('register.account') }}
             </n-divider>
             <n-button block @click="goToLogin">
-                Login Here
+                {{ $t('register.login') }}
             </n-button>
         </n-card>
     </div>

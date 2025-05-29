@@ -3,12 +3,12 @@
         <n-card class="w-full max-w-md shadow-xl rounded-lg">
             <template #header>
                 <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-900">
-                    Unlock SafeStash
+                    {{ $t('login.title') }}
                 </h1>
             </template>
 
             <div class="text-center text-sm text-gray-600 mb-6 px-2">
-                <p>Enter your local profile credentials to unlock SafeStash on this device.</p>
+                <p>{{ $t('login.subtitle') }}</p>
             </div>
 
             <LoginForm :is-loading="authStore.isLoading" @login-submit="handleLoginSubmit" />
@@ -19,15 +19,14 @@
 
             <div class="mt-3 text-right">
                 <n-button text type="primary" @click="handleForgotPassword">
-                    Forgot Password?
+                    {{ $t('login.forgotPassword') }}
                 </n-button>
             </div>
 
             <n-modal
                 v-model:show="showHintModal"
                 preset="card"
-
-                title="Password Hint"
+                :title="$t('login.passwordHintTitle')"
                 class="max-w-sm w-11/12"
             >
                 <n-spin :show="isLoadingHintUi">
@@ -35,13 +34,13 @@
                         {{ passwordHintUi }}
                     </div>
                     <div v-else-if="!isLoadingHintUi && provideUsernameForHint" class="py-4 text-gray-600">
-                        Please enter your username above to get your hint.
+                        {{ $t('login.enterUsernameForHint') }}
                     </div>
                 </n-spin>
                 <n-input
                     v-if="provideUsernameForHint"
                     v-model:value="usernameForHintModal"
-                    placeholder="Enter username to get hint"
+                    :placeholder="$t('login.usernameInputPlaceholder')"
                     class="mt-4"
                     @keydown.enter="fetchHintFromModal"
                 />
@@ -51,17 +50,17 @@
                     class="mt-3"
                     @click="fetchHintFromModal"
                 >
-                    Get Hint
+                    {{ $t('login.getHintButton') }}
                 </n-button>
                 <template #footer>
                     <n-button class="w-full" @click="showHintModal = false">
-                        Got it!
+                        {{ $t('login.gotItButton') }}
                     </n-button>
                 </template>
             </n-modal>
 
             <n-divider class="my-6">
-                <span class="text-xs text-gray-500">No profile yet?</span>
+                <span class="text-xs text-gray-500">{{ $t('login.noProfileYet') }}</span>
             </n-divider>
 
             <n-button
@@ -70,18 +69,21 @@
                 secondary
                 @click="navigateToRegister"
             >
-                Create a Local Profile
+                {{ $t('login.createLocalProfile') }}
             </n-button>
 
-            <div class="mt-8 text-center text-xs text-gray-500">
-                Your profile and data are secured locally on this device.
+            <div class="mt-8 mb-4 text-center text-xs text-gray-500">
+                {{ $t('login.localSecurityNote') }}
             </div>
+
+            <LanguageSelector />
         </n-card>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useAuthStore } from '@app/features/auth';
+import LanguageSelector from '@app/features/settings/components/LanguageSelector.vue';
 import type { UserLoginPayload } from '@shared/dtos/auth.dto';
 import { NButton, NCard, NDivider, NInput, NModal, NSpin, useMessage } from 'naive-ui';
 import { onUnmounted,ref, watch } from 'vue';

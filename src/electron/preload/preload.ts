@@ -10,6 +10,7 @@ const api: IDbApi = {
     getAvailableSettings: () => ipcRenderer.invoke(IPC_CHANNELS.GET_APP_SETUP_DATA),
     register:             (userRegisterPayload: UserCreatePayload) => ipcRenderer.invoke(IPC_CHANNELS.USER_REGISTER, userRegisterPayload),
     login:                (userLoginPayload: UserLoginPayload) => ipcRenderer.invoke(IPC_CHANNELS.USER_LOGIN, userLoginPayload),
+    getAccountTypes:      () => ipcRenderer.invoke(IPC_CHANNELS.ACCOUNT_GET_TYPES),
 };
 
 try {

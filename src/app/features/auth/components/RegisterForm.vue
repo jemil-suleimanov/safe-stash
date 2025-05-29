@@ -9,62 +9,69 @@
         @submit.prevent="onFormSubmit"
     >
         <n-grid :cols="2" :x-gap="24" :y-gap="4">
-            <n-form-item-gi path="firstName" label="First Name (Optional)">
-                <n-input v-model:value="formData.firstName" placeholder="Enter your first name" />
-            </n-form-item-gi>
-            <n-form-item-gi path="lastName" label="Last Name (Optional)">
-                <n-input v-model:value="formData.lastName" placeholder="Enter your last name" />
-            </n-form-item-gi>
-
-            <n-form-item-gi :span="2" path="username" label="Username">
-                <n-input v-model:value="formData.username" placeholder="Choose a local username" />
+            <n-form-item-gi path="firstName" :label="$t('register.form.firstNameLabel')">
+                <n-input
+                    v-model:value="formData.firstName"
+                    :placeholder="$t('register.form.firstNamePlaceholder')"
+                />
             </n-form-item-gi>
 
-            <n-form-item-gi path="password" label="Password">
+            <n-form-item-gi path="lastName" :label="$t('register.form.lastNameLabel')">
+                <n-input
+                    v-model:value="formData.lastName"
+                    :placeholder="$t('register.form.lastNamePlaceholder')"
+                />
+            </n-form-item-gi>
+
+            <n-form-item-gi :span="2" path="username" :label="$t('register.form.usernameLabel')">
+                <n-input
+                    v-model:value="formData.username"
+                    :placeholder="$t('register.form.usernamePlaceholder')"
+                />
+            </n-form-item-gi>
+
+            <n-form-item-gi path="password" :label="$t('register.form.passwordLabel')">
                 <n-input
                     v-model:value="formData.password"
                     type="password"
                     show-password-on="mousedown"
-                    placeholder="Enter a password"
+                    :placeholder="$t('register.form.passwordPlaceholder')"
                 />
             </n-form-item-gi>
-            <n-form-item-gi path="confirmPassword" label="Confirm Password">
+
+            <n-form-item-gi path="confirmPassword" :label="$t('register.form.confirmPasswordLabel')">
                 <n-input
                     v-model:value="formData.confirmPassword"
                     type="password"
                     show-password-on="mousedown"
-                    placeholder="Confirm your password"
+                    :placeholder="$t('register.form.confirmPasswordPlaceholder')"
                 />
             </n-form-item-gi>
 
             <n-form-item-gi :span="2" path="passwordHint" label-style="display: flex; align-items: center;">
                 <template #label>
-                    Password Hint
+                    {{ $t('register.form.passwordHintLabel') }}
                     <n-popover trigger="hover" style="max-width: 300px;">
                         <template #trigger>
                             <n-icon size="18" :depth="3" style="cursor: help; padding-top: 4px;">
                                 <HelpCircleOutline />
                             </n-icon>
                         </template>
-                        <span>
-                            <strong>SafeStash</strong> is a fully offline app and cannot send password recovery links.
-                            This hint will be shown to you locally if you forget your password.
-                            Make it memorable for you, but not obvious to others.
-                        </span>
+                        <span>{{ $t('register.form.passwordHintInfo.tooltip') }}</span>
                     </n-popover>
                 </template>
                 <n-input
                     v-model:value="formData.passwordHint"
-                    placeholder="e.g., My first pet's name"
+                    :placeholder="$t('register.form.passwordHintPlaceholder')"
                     :status="formErrors.passwordHint ? 'error' : undefined"
                 />
             </n-form-item-gi>
 
-            <n-form-item-gi path="languageCode" label="Default Language">
+            <n-form-item-gi path="languageCode" :label="$t('register.form.languageCodeLabel')">
                 <LanguageSelector />
             </n-form-item-gi>
 
-            <n-form-item-gi path="currencyCode" label="Default Currency">
+            <n-form-item-gi path="currencyCode" :label="$t('register.form.currencyCodeLabel')">
                 <CurrencySelector />
             </n-form-item-gi>
         </n-grid>
@@ -77,13 +84,15 @@
             :disabled="isLoading"
             style="margin-top: 24px;"
         >
-            Create Profile & Secure App
+            {{ $t('register.form.submitButton') }}
         </n-button>
+
         <n-text v-if="error" type="error" class="form-error-text">
             {{ error }}
         </n-text>
     </n-form>
 </template>
+
 
 <script setup lang="ts">
 import { useAuthStore } from '@app/features/auth';
@@ -98,9 +107,11 @@ import {
     NButton,     NForm, NFormItemGi, NGrid, NInput, NText,
 } from 'naive-ui';
 import { storeToRefs } from 'pinia';
-import { reactive, ref, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const notificationStore = useNotificationStore();
+const { t } = useI18n();
 
 const emit = defineEmits<{
     (e: 'submit', userData: UserCreatePayload);
@@ -129,38 +140,40 @@ const formErrors = reactive<Record<string, boolean>>({
     confirmPassword: false,
 });
 
-const formRules: FormRules = {
-    username: [
-        { required: true, message: 'Username is required.', trigger: ['input', 'blur'] },
-        { min: 3, message: 'Username must be at least 3 characters long.', trigger: ['input', 'blur'] },
-    ],
-    password: [
-        { required: true, message: 'Password is required.', trigger: ['input', 'blur'] },
-        { min: 6, message: 'Password must be at least 6 characters long.', trigger: ['input', 'blur'] },
-    ],
-    passwordHint: [
-        { required: true, message: 'Password hint is required.', trigger: ['input', 'blur'] },
-        { min: 3, message: 'Hint should be at least 3 characters long for effectiveness.', trigger: ['input', 'blur'] },
-    ],
-    confirmPassword: [
-        { required: true, message: 'Please confirm your password.', trigger: ['input', 'blur'] },
-        {
-            validator: (rule: FormItemRule, value: string) => {
-                if (value !== formData.value.password) {
-                    return new Error('Passwords do not match.');
-                }
-                return true;
+const formRules = computed(() => {
+    return {
+        username: [
+            { required: true, message: t('register.form.validation.usernameRequired'), trigger: ['input', 'blur'] },
+            { min: 3, message: t('register.form.validation.usernameMin'), trigger: ['input', 'blur'] },
+        ],
+        password: [
+            { required: true, message: t('register.form.validation.passwordRequired'), trigger: ['input', 'blur'] },
+            { min: 6, message: t('register.form.validation.passwordMin'), trigger: ['input', 'blur'] },
+        ],
+        passwordHint: [
+            { required: true, message: t('register.form.validation.passwordHintRequired'), trigger: ['input', 'blur'] },
+            { min: 3, message: t('register.form.validation.passwordHintMin'), trigger: ['input', 'blur'] },
+        ],
+        confirmPassword: [
+            { required: true, message: t('register.form.validation.confirmPasswordRequired'), trigger: ['input', 'blur'] },
+            {
+                validator: (rule: FormItemRule, value: string) => {
+                    if (value !== formData.value.password) {
+                        return new Error(t('register.form.validation.confirmPasswordMismatch'));
+                    }
+                    return true;
+                },
+                trigger: ['input', 'blur'],
             },
-            trigger: ['input', 'blur'],
-        },
-    ],
-    languageCode: [
-        { required: true, message: 'Please select a default language.', trigger: ['change', 'blur'] },
-    ],
-    currencyCode: [
-        { required: true, message: 'Please select a default currency.', trigger: ['change', 'blur'] },
-    ],
-};
+        ],
+        languageCode: [
+            { required: true, message: t('register.form.validation.languageCodeRequired'), trigger: ['change', 'blur'] },
+        ],
+        currencyCode: [
+            { required: true, message: t('register.form.validation.currencyCodeRequired'), trigger: ['change', 'blur'] },
+        ],
+    };
+});
 
 
 watch([selectedLanguage, defaultCurrency], ([newLanguage, newCurrency]) => {
@@ -172,10 +185,9 @@ watch([selectedLanguage, defaultCurrency], ([newLanguage, newCurrency]) => {
     }
 });
 
-
 async function onFormSubmit() {
     const isValid = await formRef.value?.validate().catch(() => {
-        notificationStore.error('Please fill in all required fields correctly.');
+        notificationStore.error(t('register.form.formError'));
     });
 
     if (!isValid) {

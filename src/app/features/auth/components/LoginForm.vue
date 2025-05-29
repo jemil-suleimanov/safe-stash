@@ -6,10 +6,10 @@
         label-placement="top"
         @submit.prevent="onFormSubmit"
     >
-        <n-form-item path="username" label="Username">
+        <n-form-item :label="$t('login.form.usernameLabel')" path="username">
             <n-input
                 v-model:value="formData.username"
-                placeholder="Enter your username"
+                :placeholder="$t('login.form.usernamePlaceholder')"
                 :status="formErrors.username ? 'error' : undefined"
                 @blur="validateField('username')"
                 @input="clearError('username')"
@@ -20,12 +20,12 @@
             </n-input>
         </n-form-item>
 
-        <n-form-item path="password" label="Password">
+        <n-form-item :label="$t('login.form.passwordLabel')" path="password">
             <n-input
                 v-model:value="formData.password"
                 type="password"
                 show-password-on="mousedown"
-                placeholder="Enter your password"
+                :placeholder="$t('login.form.passwordPlaceholder')"
                 :status="formErrors.password ? 'error' : undefined"
                 @blur="validateField('password')"
                 @input="clearError('password')"
@@ -44,7 +44,7 @@
             :disabled="isLoading"
             style="margin-top: 20px;"
         >
-            Login
+            {{ $t('login.form.submitButton') }}
         </n-button>
     </n-form>
 </template>
@@ -57,6 +57,9 @@ import {
     type FormRules, NButton,     NForm, NFormItem, NIcon,
     NInput   } from 'naive-ui';
 import { defineEmits, defineProps,reactive, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const emit = defineEmits<{
     // eslint-disable-next-line no-unused-vars
@@ -81,10 +84,10 @@ const formErrors = reactive<Record<keyof UserLoginPayload, boolean>>({
 
 const formRules: FormRules = {
     username: [
-        { required: true, message: 'Username is required.', trigger: ['input', 'blur'] },
+        { required: true, message: t('login.form.validation.usernameRequired'), trigger: ['input', 'blur'] },
     ],
     password: [
-        { required: true, message: 'Password is required.', trigger: ['input', 'blur'] },
+        { required: true, message: t('login.form.validation.passwordRequired'), trigger: ['input', 'blur'] },
     ],
 };
 

@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
                 user.value = response;
                 isAuthenticated.value = true;
             }
-            return response;
+            return user;
         } catch (err) {
             error.value = 'An error occurred during registration.';
             console.error('Registration error:', err);

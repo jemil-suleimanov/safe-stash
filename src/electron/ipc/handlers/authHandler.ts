@@ -3,7 +3,7 @@ import { UserCreatePayload, UserLoginPayload } from '@shared/dtos/auth.dto';
 import { IPC_CHANNELS } from '@shared/ipc-channels';
 import { ipcMain } from 'electron';
 
-import { handleServiceCall } from './handlers/handler-utils';
+import { handleServiceCall } from './handler-utils';
 
 export function registerAuthHandlers(
     userService: UserService,

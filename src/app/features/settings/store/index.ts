@@ -33,7 +33,6 @@ export const useSettingsStore = defineStore('settings', () => {
     }
 
     function setTheme(newTheme: 'light' | 'dark') {
-        console.log('Setting theme to:', newTheme);
         theme.value = newTheme;
     }
 

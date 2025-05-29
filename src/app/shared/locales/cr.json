@@ -1,3 +1,83 @@
 {
-    "greet": "Selyam"
+    "greet": "SafeStash Profiliñizni Yaratıñız",
+    "register": {
+        "info": {
+            "title": "SafeStash tuzuluvını bu cihazda saqlayıñız",
+            "line1": "Bu profil yerli baylıq malümatlarıñıznı ruxsatsız kirüvden saqlay.",
+            "line2": "Profil ve baylıq malümatlarıñız yalnız cihazıñızda saqlana, hiçbir yerge yiberilme. SafeStash şahsiy sırlarıñıznı birinci sırada tutay."
+        },
+        "account": "Evelsi hesapıñız barmı edi?",
+        "login": "Şu yerden kirüv",
+        "form": {
+            "firstNameLabel": "Adı (istege bağlı)",
+            "firstNamePlaceholder": "Adıñıznı kirsetiñiz",
+            "lastNameLabel": "Soyadı (istege bağlı)",
+            "lastNamePlaceholder": "Soyadıñıznı kirsetiñiz",
+            "usernameLabel": "Qullanıcı adı",
+            "usernamePlaceholder": "Yerli qullanıcı adı saylañız",
+            "passwordLabel": "Parol",
+            "passwordPlaceholder": "Parol kirsetiñiz",
+            "confirmPasswordLabel": "Parolnı tasdıqlañız",
+            "confirmPasswordPlaceholder": "Parolnı qayta kirsetiñiz",
+            "passwordHintLabel": "Parol içün esaret",
+            "passwordHintPlaceholder": "mes., Birinci ev hayvanımnıñ adı",
+            "passwordHintInfo": {
+                "title": "Parol içün esaret",
+                "tooltip": "SafeStash tolu offline qullanmadır ve parol sıfırlama bağlantısı yollayamay. Bu esaret parolnı unutqan olsan, yerli olaraq sana kösterilecek. Yañlış adamlar içün añlaşıqlı olmasın, amma öziñ añlay bilecek ve hatırlay bilecek şekilde olsun."
+            },
+            "languageCodeLabel": "Baş til",
+            "currencyCodeLabel": "Baş para birimi",
+            "submitButton": "Profilni yarat ve qullanmanı saqla",
+            "validation": {
+                "usernameRequired": "Qullanıcı adı şarttır.",
+                "usernameMin": "Qullanıcı adı en az 3 aref olmalıdır.",
+                "passwordRequired": "Parol şarttır.",
+                "passwordMin": "Parol en az 6 aref olmalıdır.",
+                "passwordHintRequired": "Parol içün esaret şarttır.",
+                "passwordHintMin": "Esaret en az 3 aref olmalıdır.",
+                "confirmPasswordRequired": "Parolnı tasdıqlañız.",
+                "confirmPasswordMismatch": "Parollar birbirine uymay.",
+                "languageCodeRequired": "Baş tildi saylañız.",
+                "currencyCodeRequired": "Baş para birimini saylañız."
+            },
+            "formError": "Lütfen bütün şartlı yerlerni doğru doldurıñız."
+        }
+    },
+    "login": {
+        "title": "SafeStash-ni aç",
+        "subtitle": "Bu cihazda SafeStash-ni açuv içün yerli profil malümatlarıñıznı kiriting.",
+        "forgotPassword": "Parolı unutduñuzmu?",
+        "passwordHintTitle": "Parolğa ipuçı",
+        "enterUsernameForHint": "İpucunu almaq içün yuxarıda qullanıcı atıñıznı yazıñız.",
+        "usernameInputPlaceholder": "İpucunu almaq içün qullanıcı atıñıznı yazıñız",
+        "getHintButton": "İpuç al",
+        "gotItButton": "Añladım!",
+        "noProfileYet": "Hâlâ profil yoqmu?",
+        "createLocalProfile": "Yerli profil yarat",
+        "localSecurityNote": "Profiliñiz ve malümatlarıñız bu cihazda yerli saqlanadı.",
+        "form": {
+            "usernameLabel": "Qullanıcı Adı",
+            "usernamePlaceholder": "Qullanıcı atıñıznı yazıñız",
+            "passwordLabel": "Parol",
+            "passwordPlaceholder": "Parolıñıznı yazıñız",
+            "submitButton": "Kiriş",
+            "validation": {
+                "usernameRequired": "Qullanıcı adı şarttır.",
+                "passwordRequired": "Parol şarttır."
+            }
+        }
+    },
+    "account": {
+        "type": {
+            "CASH": "Nağdı para",
+            "BANK_CHK": "Hisap kartı (Çek hisabı)",
+            "BANK_SAV": "Amanat hisabı",
+            "CARD_CR": "Kredit kartı",
+            "CARD_DB": "Debit kartı",
+            "INVEST": "Investitsiya hisabı",
+            "LOAN": "Kredit",
+            "EWALLET": "Elektron cüzdan",
+            "OTHER": "Başqa"
+        }
+    }
 }

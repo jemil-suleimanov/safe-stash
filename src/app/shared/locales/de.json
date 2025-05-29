@@ -1,3 +1,83 @@
 {
-    "greet": "Hallo"
+    "greet": "Erstelle dein SafeStash-Profil",
+    "register": {
+        "info": {
+            "title": "Sichere deine SafeStash-App auf diesem Gerät",
+            "line1": "Dieses Profil schützt deine lokalen Finanzdaten vor unbefugtem Zugriff.",
+            "line2": "Dieses Profil und deine Finanzdaten werden nur auf deinem Gerät gespeichert und niemals übertragen. SafeStash stellt deine Privatsphäre an erste Stelle."
+        },
+        "account": "Du hast bereits ein Konto?",
+        "login": "Hier einloggen",
+        "form": {
+            "firstNameLabel": "Vorname (optional)",
+            "firstNamePlaceholder": "Gib deinen Vornamen ein",
+            "lastNameLabel": "Nachname (optional)",
+            "lastNamePlaceholder": "Gib deinen Nachnamen ein",
+            "usernameLabel": "Benutzername",
+            "usernamePlaceholder": "Wähle einen lokalen Benutzernamen",
+            "passwordLabel": "Passwort",
+            "passwordPlaceholder": "Gib ein Passwort ein",
+            "confirmPasswordLabel": "Passwort bestätigen",
+            "confirmPasswordPlaceholder": "Bestätige dein Passwort",
+            "passwordHintLabel": "Passworthinweis",
+            "passwordHintPlaceholder": "z. B. Name meines ersten Haustiers",
+            "passwordHintInfo": {
+                "title": "Passworthinweis",
+                "tooltip": "SafeStash ist vollständig offline und kann keine Passwort-Wiederherstellungslinks senden. Dieser Hinweis wird dir lokal angezeigt, wenn du dein Passwort vergisst. Er sollte für dich einprägsam, aber für andere nicht offensichtlich sein."
+            },
+            "languageCodeLabel": "Standardsprache",
+            "currencyCodeLabel": "Standardwährung",
+            "submitButton": "Profil erstellen & App sichern",
+            "validation": {
+                "usernameRequired": "Benutzername ist erforderlich.",
+                "usernameMin": "Der Benutzername muss mindestens 3 Zeichen lang sein.",
+                "passwordRequired": "Passwort ist erforderlich.",
+                "passwordMin": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+                "passwordHintRequired": "Ein Passworthinweis ist erforderlich.",
+                "passwordHintMin": "Der Hinweis sollte mindestens 3 Zeichen lang sein.",
+                "confirmPasswordRequired": "Bitte bestätige dein Passwort.",
+                "confirmPasswordMismatch": "Passwörter stimmen nicht überein.",
+                "languageCodeRequired": "Bitte wähle eine Standardsprache.",
+                "currencyCodeRequired": "Bitte wähle eine Standardwährung."
+            },
+            "formError": "Bitte fülle alle Pflichtfelder korrekt aus."
+        }
+    },
+    "login": {
+        "title": "SafeStash entsperren",
+        "subtitle": "Geben Sie Ihre lokalen Profilanmeldedaten ein, um SafeStash auf diesem Gerät zu entsperren.",
+        "forgotPassword": "Passwort vergessen?",
+        "passwordHintTitle": "Passworthinweis",
+        "enterUsernameForHint": "Bitte geben Sie oben Ihren Benutzernamen ein, um Ihren Hinweis zu erhalten.",
+        "usernameInputPlaceholder": "Benutzernamen eingeben, um Hinweis zu erhalten",
+        "getHintButton": "Hinweis erhalten",
+        "gotItButton": "Verstanden!",
+        "noProfileYet": "Noch kein Profil?",
+        "createLocalProfile": "Lokales Profil erstellen",
+        "localSecurityNote": "Ihr Profil und Ihre Daten sind lokal auf diesem Gerät gesichert.",
+        "form": {
+            "usernameLabel": "Benutzername",
+            "usernamePlaceholder": "Geben Sie Ihren Benutzernamen ein",
+            "passwordLabel": "Passwort",
+            "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+            "submitButton": "Anmelden",
+            "validation": {
+                "usernameRequired": "Benutzername ist erforderlich.",
+                "passwordRequired": "Passwort ist erforderlich."
+            }
+        }
+    },
+    "account": {
+        "type": {
+            "CASH": "Bargeld",
+            "BANK_CHK": "Girokonto",
+            "BANK_SAV": "Sparkonto",
+            "CARD_CR": "Kreditkarte",
+            "CARD_DB": "Debitkarte",
+            "INVEST": "Investmentkonto",
+            "LOAN": "Kredit",
+            "EWALLET": "E-Wallet",
+            "OTHER": "Sonstiges"
+        }
+    }
 }

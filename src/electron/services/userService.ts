@@ -1,4 +1,5 @@
 import { rowToUser } from '@electron/database/repositories/userRepository';
+import { sessionStore } from '@electron/store/sessionStore';
 import { User } from '@shared/domain/User';
 import { UserCreatePayload, UserLoginPayload } from '@shared/dtos/auth.dto';
 import { ValidationError } from '@shared/errors/AppError';
@@ -68,6 +69,7 @@ export class UserService {
                 throw new ValidationError('Invalid username or password.', null);
             }
 
+            sessionStore.setUserID(user.id);
             return rowToUser(user);
         } catch (error) {
             console.error('Error during login: ', error);

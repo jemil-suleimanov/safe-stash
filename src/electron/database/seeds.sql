@@ -120,14 +120,14 @@ INSERT OR IGNORE INTO currencies (code, symbol, name) VALUES
 ('ZMK', 'ZK', 'Zambian Kwacha'),
 ('ZWL', 'ZWL$', 'Zimbabwean Dollar');
 
--- Seeds for languages
+
 INSERT OR IGNORE INTO languages (code, name, icon) VALUES
 ('en', 'English', '🇬🇧'),
 ('de', 'Deutsch', '🇩🇪'),
 ('ua', 'Українська', '🇺🇦'),
 ('cr', 'Qırım', '💙');
 
--- Seeds for account_types
+
 INSERT OR IGNORE INTO account_types (code, name, description) VALUES
     ('CASH', 'Cash', 'Physical cash holdings'),
     ('BANK_CHK', 'Checking Account', 'Standard checking/current account'),
@@ -137,4 +137,3 @@ INSERT OR IGNORE INTO account_types (code, name, description) VALUES
     ('INVEST', 'Investment', 'Investment or brokerage account'),
     ('LOAN', 'Loan Account', 'Mortgage, car loan, etc.'),
     ('EWALLET', 'E-Wallet', 'Digital wallet like PayPal, Venmo');
--- Add/refine as needed
