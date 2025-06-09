@@ -36,6 +36,12 @@
             </n-input>
         </n-form-item>
 
+        <n-form-item path="rememberMe" label-placement="left">
+            <n-checkbox v-model:checked="formData.rememberMe">
+                Keep me logged in
+            </n-checkbox>
+        </n-form-item>
+
         <n-button
             type="primary"
             attr-type="submit"
@@ -78,8 +84,9 @@ const formData = reactive<UserLoginPayload>({
 
 // To manually track error states for input :status prop
 const formErrors = reactive<Record<keyof UserLoginPayload, boolean>>({
-    username: false,
-    password: false,
+    username:   false,
+    password:   false,
+    rememberMe: false,
 });
 
 const formRules: FormRules = {

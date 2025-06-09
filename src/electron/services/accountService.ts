@@ -1,4 +1,4 @@
-import { sessionStore } from '@electron/store/sessionStore';
+import { persistentSessionManager } from '@electron/store/sessionStore';
 import { CreateAccountPayload } from '@shared/dtos/account.dto';
 import { AppError, ValidationError } from '@shared/errors/AppError';
 import { IAccountRepository } from '@shared/interfaces/IAccountRepository';
@@ -24,7 +24,7 @@ export class AccountService {
                 throw new ValidationError('Initial balance must be a valid number.', null);
             }
 
-            const createdAccount = this.accountRepo.create(userId, payload);
+            const createdAccount = await this.accountRepo.create(userId, payload);
 
             return createdAccount;
         } catch (error) {
@@ -59,7 +59,7 @@ export class AccountService {
     public async getAccountById(id: number) {
         try {
             const userId = this._getAuthenticatedUserId();
-            const account = this.accountRepo.findById(id, userId);
+            const account = await this.accountRepo.findById(id, userId);
             return account;
         } catch (error) {
             console.error('Error fetching account types: ', error);
@@ -78,8 +78,8 @@ export class AccountService {
         }
     }
 
-    private _getAuthenticatedUserId(): number { // Helper
-        const userId = sessionStore.getUserID();
+    private _getAuthenticatedUserId(): number {
+        const userId = persistentSessionManager.getUserID();
         if (!userId) {
             throw new AppError('User not authenticated.');
         }

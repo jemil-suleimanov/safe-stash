@@ -1,39 +1,45 @@
 <template>
     <n-select
-        placeholder="Choose account type"
-        :options="accountOptions"
+        v-model:value="accountType"
+        placeholder="Choose account type (Optional)"
+        :options="accountTypeOptions"
+        :loading="isLoading"
         filterable
+        clearable
     />
-    <div>
-        {{ $t('account.type.CASH') }}
-    </div>
 </template>
 
 <script setup lang="ts">
 import { useAccountStore } from '@app/features/account/store/useAccountStore';
+import type { AccountTypeCode } from '@shared/types/account';
+import { NSelect } from 'naive-ui';
 import { storeToRefs } from 'pinia';
-import { computed, onMounted } from 'vue';
+import { computed, defineProps, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { accountTypes } = storeToRefs(useAccountStore());
+defineProps<{
+    disabled?: boolean;
+}>();
 
-const { getAccountCodes } = useAccountStore();
+const accountStore = useAccountStore();
+const { accountTypes, isLoading } = storeToRefs(accountStore);
+const { getAccountCodes } = accountStore; // Action to get types
 
-const { t } = useI18n();
+const { t } = useI18n(); // Use if you have i18n keys for type names, otherwise use DB name
 
+const accountType = defineModel<AccountTypeCode | null>('accountType', { required: true });
 
-const accountOptions = computed(() => {
-    console.log('account types', accountTypes);
-    return accountTypes.value.map(type => {
-        console.log(type, 'type');
-        return {
-            value: type,
-            label: t(`account.type.${type}`),
-        };
-    });
+const accountTypeOptions = computed(() => {
+    if (!accountTypes.value) return [];
+    return accountTypes.value.map((type: AccountTypeCode) => ({
+        value: type,
+        label: t(`account.type.${type}`),
+    }));
 });
 
-onMounted(() => {
-    getAccountCodes();
+onMounted(async () => {
+    if (!accountTypes.value?.length) {
+        getAccountCodes();
+    }
 });
 </script>

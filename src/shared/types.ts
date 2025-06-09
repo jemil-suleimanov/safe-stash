@@ -1,8 +1,10 @@
+import { Account } from './domain/Account';
 import { Currency } from './domain/Currency';
 import { Language } from './domain/Language';
 import { User } from './domain/User';
+import { CreateAccountPayload } from './dtos/account.dto';
 import { UserCreatePayload, UserLoginPayload } from './dtos/auth.dto';
-import { AccountTypeCode } from './types/account';
+import { AccountType, AccountTypeCode } from './types/account';
 
 export interface AppSetupData {
     availableCurrencies: Currency[]
@@ -14,6 +16,11 @@ export interface IDbApi {
     register(userData: UserCreatePayload): Promise<DbApiResponse<User>>;
     login(userLoginData: UserLoginPayload): Promise<DbApiResponse<User>>;
     getAccountTypes(): Promise<DbApiResponse<AccountTypeCode[]>>;
+    getAccountTypeByCode(code: AccountTypeCode): Promise<DbApiResponse<AccountType>>;
+    createAccount(payload: CreateAccountPayload): Promise<DbApiResponse<Account>>;
+    getAccountById(accountId: number): Promise<DbApiResponse<Account>>;
+    getAllAccountsForUser(): Promise<DbApiResponse<Account[]>>;
+    authGetInitialSession(): Promise<DbApiResponse<User | null>>;
 }
 
 export interface DbApiResponse<T> {

@@ -11,6 +11,7 @@ export interface UserCreatePayload {
 }
 
 export interface UserLoginPayload {
-    username: string;
-    password: string;
+    username:    string;
+    password:    string;
+    rememberMe?: boolean;
 }
