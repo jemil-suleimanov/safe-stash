@@ -27,33 +27,52 @@
             />
         </n-modal>
 
-        <!--
         <div class="mt-4 p-4 border border-[var(--n-border-color)] rounded-md bg-[var(--n-card-color)] text-[var(--n-text-color-2)]">
             Account list will appear here.
-            <div v-if="accountStore.accounts.length > 0">
-                <p v-for="acc in accountStore.accounts" :key="acc.id">
-                    {{ acc.name }} - {{ acc.startBalanceCents / 100 }}
+            <div v-if="accounts.length > 0">
+                <p v-for="acc in accounts" :key="acc.id">
+                    {{ acc.name }} - {{ formatCents(acc.startBalanceCents) }}
                 </p>
             </div>
             <p v-else>
                 No accounts yet. Click "New Account" to add one!
             </p>
         </div>
-        -->
     </div>
 </template>
 
-  <script setup lang="ts">
+<script setup lang="ts">
+import { useAccountStore } from '@app/features/account/store/useAccountStore';
+import { useMoneyFormatter } from '@app/shared/composables/useMoneyFormatter';
 import type { CreateAccountPayload } from '@shared/dtos/account.dto';
 import { AddOutline as AddIcon } from '@vicons/ionicons5';
-import { NButton, NCard,NIcon, NModal } from 'naive-ui';
-import { ref } from 'vue';
+import { NButton, NIcon, NModal } from 'naive-ui';
+import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
 
 import AccountForm from '../components/AccountForm.vue';
 
 const showCreateModal = ref(false);
 
+const { accounts } = storeToRefs(useAccountStore());
+const { getAccountsList, createAccount } = useAccountStore();
+const showMoney = useMoneyFormatter();
+
+onMounted(async () => {
+    await getAccountsList();
+    console.log(accounts.value);
+});
+
 async function handleCreateAccount(payload: CreateAccountPayload) {
-    console.log('create');
+    await createAccount(payload);
+    showCreateModal.value = false;
 }
-  </script>
+
+function formatCents(cents: number | null | undefined) {
+    if (cents === null || cents === undefined) {
+        return 0;
+    } else {
+        return showMoney(cents);
+    }
+}
+</script>

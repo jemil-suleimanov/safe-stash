@@ -46,7 +46,7 @@ export class AccountRepository implements IAccountRepository {
         this.db = db;
         this.createAccountStmt = this.db.prepare(`
             INSERT INTO accounts (
-                user_id, icon_path, account_type_code, name, start_balance_cents, description, is_active
+                user_id, name, account_type_code, start_balance_cents, icon_path, description, is_active
             )
             VALUES (
                 @userId, @name, @accountTypeCode, @startBalance, @iconPath, @description, 1
